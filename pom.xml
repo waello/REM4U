@@ -6,7 +6,7 @@
 
     <groupId>com.navettevatry.rem4u</groupId>
     <artifactId>VTC-Comparator</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name></name>
     <description></description>
