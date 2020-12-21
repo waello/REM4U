@@ -56,6 +56,7 @@ public class UrbainRequestMapper {
         }
 
     };
+
     public static Function<VTCComparatorRequest, PassengerRequestsRequest> VTCComparatorRequestTopassenger_requests
             = new Function<VTCComparatorRequest, PassengerRequestsRequest>() {
         @Override
@@ -66,13 +67,14 @@ public class UrbainRequestMapper {
             ad1.setLong(vtcComparatorRequest.getDepartureLocation().getLongitude());
             ad1.setLat(vtcComparatorRequest.getDepartureLocation().getLatitude());
             ad1.setName(vtcComparatorRequest.getDepartureLocation().getAddress());
+            ad1.setzip_code("");
             Tr.setAddress_pick_up(ad1);
             Addresss ad2= new Addresss ();
             ad2.setLat(vtcComparatorRequest.getArrivalLocation().getLatitude());
             ad2.setlong(vtcComparatorRequest.getArrivalLocation().getLongitude());
             ad2.setName(vtcComparatorRequest.getArrivalLocation().getAddress());
             Tr.setAddress_drop_off(ad2);
-
+             ad2.setzip_code("");
             Tr.setType(1);
             Tr.setChannel(2);
 

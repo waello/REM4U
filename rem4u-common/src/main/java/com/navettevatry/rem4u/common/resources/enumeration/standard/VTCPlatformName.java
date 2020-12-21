@@ -23,6 +23,7 @@ public enum VTCPlatformName implements Serializable {
     MARCEL_HYBRID("MARCEL_HYBRID"),
     FELIX("FELIX"),
     CITYBIRD("CITYBIRD"),
+    Marcel("Marcel"),
     URBAN_DRIVER("URBAN_DRIVER");
 
     private String platformName;

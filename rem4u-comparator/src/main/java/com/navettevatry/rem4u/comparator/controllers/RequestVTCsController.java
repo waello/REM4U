@@ -75,7 +75,8 @@ public class RequestVTCsController {
 
     @Autowired
     UrbanDriverService urbanDriverService;
-
+    @Autowired
+    MarcelService MArcelService;
     @Autowired
     ComparisonService comparisonService;
 
@@ -112,14 +113,16 @@ public class RequestVTCsController {
             CompletableFuture<VTCComparatorResponse> urbanDriverVtcComparatorResponse = this.urbanDriverService.getUrbanDriverResponseAsync(vtcComparatorRequest);
             LOGGER.debug("urbanDriverVtcComparatorResponsec" +urbanDriverVtcComparatorResponse.toString());
 
+            CompletableFuture<VTCComparatorResponse> MarceltcComparatorResponse = this.MArcelService.getMarcelResponseAsync(vtcComparatorRequest);
 
             List<CompletableFuture<VTCComparatorResponse>> completableFutures = Arrays.asList(
                     snapCarVtcComparatorResponse,alloCabVtcComparatorResponse, //  bcvtcVtcComparatorResponse, kaptenVtcComparatorResponse,
 //                    leCabVtcComparatorResponse, lyftVtcComparatorResponse, olaCabVtcComparatorResponse, ,
-                    uberVtcComparatorResponse,
+                    uberVtcComparatorResponse,MarceltcComparatorResponse,
                     urbanDriverVtcComparatorResponse);
 
             System.out.println("dddddddddddddddddddddd"+urbanDriverVtcComparatorResponse.toString());
+            System.out.println("MARcelaman"+MarceltcComparatorResponse.toString());
 
            CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0]))
                     .exceptionally(ex -> null)
@@ -275,8 +278,9 @@ public class RequestVTCsController {
             VTCComparatorResponse uberVtcComparatorResponse = this.uberService.getUberResponse(vtcComparatorRequest);
           System.out.println("uber"+uberVtcComparatorResponse.toString());
             VTCComparatorResponse urbanDriverVtcComparatorResponse = this.urbanDriverService.getUrbanDriverResponse(vtcComparatorRequest);
+            VTCComparatorResponse MarceltcComparatorResponse = this.MArcelService.getMARcelResponse(vtcComparatorRequest);
 
-            System.out.println("uber"+uberVtcComparatorResponse.toString());
+            System.out.println("uber"+MarceltcComparatorResponse.toString());
 
            /* final float estimsatedDistance = (float) Math.round(Rem4uUtils.distance(vtcComparatorRequest.getDepartureLocation().getLatitude().doubleValue(),
                     vtcComparatorRequest.getDepartureLocation().getLongitude().doubleValue(),
@@ -303,6 +307,7 @@ public class RequestVTCsController {
           if(snapCarVtcComparatorResponse != null && snapCarVtcComparatorResponse.getOffers() != null) vtcComparatorResponse.getOffers().addAll(snapCarVtcComparatorResponse.getOffers());
             if(uberVtcComparatorResponse != null && uberVtcComparatorResponse.getOffers() != null) vtcComparatorResponse.getOffers().addAll(uberVtcComparatorResponse.getOffers());
             if(urbanDriverVtcComparatorResponse != null && urbanDriverVtcComparatorResponse.getOffers() != null) vtcComparatorResponse.getOffers().addAll(urbanDriverVtcComparatorResponse.getOffers());
+            if(MarceltcComparatorResponse != null && MarceltcComparatorResponse.getOffers() != null) vtcComparatorResponse.getOffers().addAll(MarceltcComparatorResponse.getOffers());
 
             Summary summary = new Summary();
             try{

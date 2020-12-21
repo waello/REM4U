@@ -227,6 +227,74 @@ o.add(ghhhh.getBody());
 
         return  o;
     }
+
+
+    public List<PassengerRequestsResponse> MarcelDrive0 (PassengerRequestsRequest passengerRequestsRequest) throws JsonProcessingException {
+        LOGGER.debug("[UrbanDriverService] UrbanDriverEstimate");
+
+//        String uri = getUri("");
+        String uri = "https://api.classnco.com/api/v3/Marcel/vehicle_types?lat="+passengerRequestsRequest.getAddress_pick_up().getLat()+"&long="+passengerRequestsRequest.getAddress_pick_up().getLong();
+
+        this.httpHeaders = new HttpHeaders();
+
+        this.httpHeaders.put("Cookie", Collections.singletonList("_ServerVTC_session=UXhkdCs1czlwTFVqdUpJNGtyVGt6blFvNzVGVXJIeXVFQXpJckNVZkNFSjNVdXZiZHNPSzRTQlRRWGQ4bm5XaWY5ekthR2dIY2VLRGlvNjEyUEJPcjFrT21NQVRWcWphNzVsMGgxeVpTUTg9LS1Ja0tOdnh6YVVtNnBNWkJDaWRoRXFBPT0%3D--af66918a37a6d90e2f9acac6164e562a272cd281"));
+                              List<PassengerRequestsResponse> o = new ArrayList<>();
+        HttpEntity entity = new HttpEntity<>(RestTemplateBuilder.getHeaders(this.httpHeaders));
+        ResponseEntity<VehiculeResponse[]> tripCreateResponseResponse=
+                apisRestTemplate.exchange(uri, HttpMethod.GET, entity, VehiculeResponse[].class);
+        LOGGER.info(String.valueOf(Arrays.asList(tripCreateResponseResponse.getBody())));
+        LOGGER.info("ioo");
+
+        for (VehiculeResponse Estim :Arrays.asList(tripCreateResponseResponse.getBody())){
+            LOGGER.info("Estim");
+            LOGGER.info(String.valueOf(Estim.getMax_places()));
+
+
+try{
+            passengerRequestsRequest.setvehicle_type(Estim);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(passengerRequestsRequest);
+
+
+            String uri0 = "https://api.classnco.com/api/v3/Marcel/passenger_requests?locale=fr";
+
+            this.httpHeadersd = new HttpHeaders();
+            this.httpHeaders.put("Connection", Collections.singletonList("keep-alive"));
+                    this.httpHeaders.put("sec-ch-ua", Collections.singletonList("\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\""));
+                    this.httpHeaders.put("Accept", Collections.singletonList("application/json, text/plain, */*"));
+                    this.httpHeaders.put("sec-ch-ua-mobile", Collections.singletonList("?0"));
+                    this.httpHeaders.put("User-Agent", Collections.singletonList("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"));
+                    this.httpHeaders.put("Content-Type", Collections.singletonList("application/json;charset=UTF-8"));
+                    this.httpHeaders.put("Origin", Collections.singletonList("https://reservation.marcel.cab"));
+                    this.httpHeaders.put("Sec-Fetch-Site", Collections.singletonList("cross-site"));
+                    this.httpHeaders.put("Sec-Fetch-Mode", Collections.singletonList("cors"));
+                    this.httpHeaders.put("Sec-Fetch-Dest", Collections.singletonList("empty"));
+                    this.httpHeaders.put("Referer", Collections.singletonList("https://reservation.marcel.cab/"));
+                    this.httpHeaders.put("Accept-Language", Collections.singletonList("fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7"));
+                    this.httpHeaders.put("Cookie", Collections.singletonList("_ServerVTC_session=bDA3T2RZeVFnK3hPcWxzYVkwYXp5a1lBdnhtMG56ZUwvV1B0NGFlRm1GMWJNRDZEdjA4djU0UTNFOTlORVBmeHlhT205Q21UZXBFSGJhZG55bXY3TFkrYVBQZWhnNCtROG9HL3VuMjZWb2s9LS1wTkpIQXlxZnA1RGJrVlcxR0RrdEpRPT0%3D--d897868b72530f6f9ebe0897ff1b29a7c610ecc9"));
+            HttpEntity<String> entity0 = new HttpEntity<>(StringEscapeUtils.unescapeJava(json),RestTemplateBuilder.getHeaders(this.httpHeadersd));
+            ResponseEntity<PassengerRequestsResponse> ghhhh=
+                    apisRestTemplate.exchange(uri0, HttpMethod.POST, entity0, PassengerRequestsResponse.class);
+            LOGGER.info(String.valueOf(tripCreateResponseResponse.getStatusCode()));
+            o.add(ghhhh.getBody());
+}catch (Exception e){
+    LOGGER.info("MArceltrtr"+e.toString());
+    LOGGER.debug(e.toString()); }
+
+        }
+
+
+
+
+        LOGGER.info(o.toString());
+
+        LOGGER.info(String.valueOf(tripCreateResponseResponse.getStatusCode()));
+
+        return  o;
+    }
+
+
+
     public PassengerRequestsResponse urbanDriverPassengerRequest (String tripCreateRequest) {
         LOGGER.debug("[UrbanDriverService] UrbanDriverEstimate");
         LOGGER.debug("");

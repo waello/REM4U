@@ -17,7 +17,7 @@ public class UrbnResponseMapper {
     public static VTCComparatorResponse VehicleTypeToVTCComparatorResponse(List<PassengerRequestsResponse> vehiculeResponse
 
             , VTCComparatorResponse vtcComparatorResponse) {
-        System.out.println("dsdsdsdds"+vehiculeResponse.toString());
+        System.out.println("VehicleTypeToVTCComparatorResponse"+vehiculeResponse.toString());
 
         try{
             if (vtcComparatorResponse == null)
@@ -70,13 +70,15 @@ public class UrbnResponseMapper {
     }
 
     protected static ComfortType getComfortType(String comfortType){
-        if(comfortType.equals("Moto"))
-            return ComfortType.STANDARD;
+        if(comfortType.equals("Berline"))
+            return ComfortType.BERLIN;
         else if(comfortType.equals("VAN"))
             return ComfortType.ECO;
-        else if(comfortType.equals("Luxe"))
+        else if(comfortType.equals("Luxe") || comfortType.equals("Business"))
             return ComfortType.BUSINESS;
+        else  if (comfortType.equals("e•co"))
+            return  ComfortType.ECO;
         else
-            return ComfortType.ECO;
+            return ComfortType.VAN;
     }
 }
